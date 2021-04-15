@@ -45,12 +45,21 @@ class _MusicControlCardState extends State<MusicControlCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.fast_rewind_rounded,
-                size: 50.0,
+              GestureDetector(
+                onTap: () {
+                  int backSeconds = position.inSeconds - 5;
+                  if (Duration(seconds: backSeconds) > Duration.zero) {
+                    MediaControl.player.seek(Duration(seconds: backSeconds));
+                  } else {
+                    MediaControl.player.seek(Duration.zero);
+                  }
+                },
+                child: Icon(
+                  Icons.fast_rewind_rounded,
+                  size: 50.0,
+                ),
               ),
-              widget.playingStatus == PlayingStatus.PLAY ||
-                      widget.playingStatus == PlayingStatus.RESUME
+              widget.playingStatus == PlayingStatus.PLAY || widget.playingStatus == PlayingStatus.RESUME
                   ? GestureDetector(
                       onTap: () {
                         widget.controlMedia(
@@ -75,8 +84,12 @@ class _MusicControlCardState extends State<MusicControlCard> {
                     ),
               GestureDetector(
                 onTap: () {
-                  widget.controlMedia(
-                      updatedPlayingStatus: PlayingStatus.RESUME);
+                  int skipSeconds = position.inSeconds + 5;
+                  if (Duration(seconds: skipSeconds) < length) {
+                    MediaControl.player.seek(Duration(seconds: skipSeconds));
+                  } else {
+                    MediaControl.player.seek(length);
+                  }
                 },
                 child: Icon(
                   Icons.fast_forward_rounded,

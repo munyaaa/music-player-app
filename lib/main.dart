@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:music_player_app/service_locator.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  setup();
   runApp(MyApp());
 }
 

@@ -17,8 +17,8 @@ class MusicControlCard extends StatefulWidget {
 }
 
 class _MusicControlCardState extends State<MusicControlCard> {
-  Duration position = new Duration();
-  Duration length = new Duration();
+  Duration position = Duration();
+  Duration length = Duration();
 
   @override
   void initState() {

@@ -21,7 +21,6 @@ class MusicsBloc extends Bloc<MusicsEvent, MusicsState> {
   ) async* {
     if (event is SearchMusic) {
       try {
-        print(event.query);
         final response = await musicRepository.searchMusic(event.query);
         yield Loaded(musics: response);
       } on CallException catch (e) {

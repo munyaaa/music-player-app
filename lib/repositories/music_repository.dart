@@ -20,7 +20,6 @@ class MusicRepositoryImpl implements MusicRepository {
       final response = await client.post(Uri.https('itunes.apple.com', '/search'), body: {'term': '$query', 'limit': '25'});
       return Musics.fromJson(jsonDecode(response.body));
     } catch (e) {
-      print(e);
       throw CallException(message: 'Something is going wrong');
     }
   }

@@ -39,6 +39,16 @@ class _MusicControlCardState extends State<MusicControlCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 10.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(30),
+          topLeft: Radius.circular(30),
+        ),
+        boxShadow: [
+          BoxShadow(color: Colors.black38),
+        ],
+      ),
       child: Wrap(
         alignment: WrapAlignment.center,
         children: [
@@ -59,7 +69,8 @@ class _MusicControlCardState extends State<MusicControlCard> {
                   size: 50.0,
                 ),
               ),
-              widget.playingStatus == PlayingStatus.PLAY || widget.playingStatus == PlayingStatus.RESUME
+              widget.playingStatus == PlayingStatus.PLAY ||
+                      widget.playingStatus == PlayingStatus.RESUME
                   ? GestureDetector(
                       onTap: () {
                         widget.controlMedia(

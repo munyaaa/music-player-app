@@ -58,11 +58,11 @@ class _MusicCardState extends State<MusicCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       widget.music.trackName != null
-                          ? Text("${widget.music.trackName}")
+                          ? Text("${widget.music.trackName}", style: TextStyle(fontWeight: FontWeight.bold),)
                           : Container(),
-                      Text("${widget.music.artistName ?? 'Unknown Artist'}"),
+                      Text("${widget.music.artistName ?? 'Unknown Artist'}", style: TextStyle(fontSize: 12),),
                       widget.music.collectionName != null
-                          ? Text("${widget.music.collectionName}")
+                          ? Text("${widget.music.collectionName}", style: TextStyle(fontSize: 12, color: Colors.grey),)
                           : Container(),
                     ],
                   ),

@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.purple,
+        accentColor: Colors.purple,
       ),
       home: MusicsSearchPage(),
     );

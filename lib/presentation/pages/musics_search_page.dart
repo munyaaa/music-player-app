@@ -143,6 +143,7 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
         controller: _searchQuery,
         decoration: InputDecoration(
           isDense: true,
+          prefixIcon: Icon(Icons.search_rounded, size: 20.0,),
           border: OutlineInputBorder(),
           hintText: 'Search song, artist name, ...',
           hintStyle: TextStyle(color: Colors.grey),

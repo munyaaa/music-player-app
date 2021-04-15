@@ -26,6 +26,8 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
   String _musicPreviewUrl;
   int _playingTrackId;
 
+  Musics _musics = Musics();
+
   @override
   void initState() {
     super.initState();
@@ -60,6 +62,14 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
     });
   }
 
+  void _changePlayMusicArrangement() {
+    final Music playingMusic = _musics.results.where((element) => element.trackId == _playingTrackId).first;
+    setState(() {
+      _musics.results.removeWhere((element) => element.trackId == _playingTrackId);
+      _musics.results.insert(0, playingMusic);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -72,28 +82,37 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
               ),
         body: BlocProvider<MusicsBloc>(
           create: (_) => locator<MusicsBloc>(),
-          child: BlocBuilder<MusicsBloc, MusicsState>(
-            builder: (BuildContext context, MusicsState state) {
+          child: BlocListener<MusicsBloc, MusicsState>(
+            listener: (BuildContext context, MusicsState state) {
               if (state is Loaded) {
-                return Column(
-                  children: [
-                    buildSearchField(context.read<MusicsBloc>()),
-                    buildMusicListView(state.musics)
-                  ],
-                );
-              } else if (state is Error) {
-                return Expanded(
-                  child: Column(
-                    children: [
-                      buildSearchField(context.read<MusicsBloc>()),
-                      Text(state.errorMessage)
-                    ],
-                  ),
-                );
-              } else {
-                return buildSearchField(context.read<MusicsBloc>());
+                setState(() {
+                  _musics = state.musics;
+                });
               }
             },
+            child: BlocBuilder<MusicsBloc, MusicsState>(
+              builder: (BuildContext context, MusicsState state) {
+                if (state is Loaded) {
+                  return Column(
+                    children: [
+                      buildSearchField(context.read<MusicsBloc>()),
+                      buildMusicListView(_musics)
+                    ],
+                  );
+                } else if (state is Error) {
+                  return Expanded(
+                    child: Column(
+                      children: [
+                        buildSearchField(context.read<MusicsBloc>()),
+                        Text(state.errorMessage)
+                      ],
+                    ),
+                  );
+                } else {
+                  return buildSearchField(context.read<MusicsBloc>());
+                }
+              },
+            ),
           ),
         ),
       ),
@@ -110,6 +129,7 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
             controlMedia: _controlMedia,
             updateTrackId: _updateTrackId,
             playingTrackId: _playingTrackId,
+            changePlayMusicArrangement: _changePlayMusicArrangement,
           );
         },
       ),
@@ -135,6 +155,9 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.0),
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
           ),
           contentPadding: EdgeInsets.symmetric(
             vertical: 15.0,

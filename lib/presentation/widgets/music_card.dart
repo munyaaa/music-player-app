@@ -7,6 +7,7 @@ class MusicCard extends StatefulWidget {
   final Function controlMedia;
   final Function updateTrackId;
   final int playingTrackId;
+  final Function changePlayMusicArrangement;
 
   const MusicCard({
     Key key,
@@ -14,6 +15,7 @@ class MusicCard extends StatefulWidget {
     @required this.controlMedia, 
     @required this.updateTrackId, 
     @required this.playingTrackId,
+    @required this.changePlayMusicArrangement,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class _MusicCardState extends State<MusicCard> {
               updatedPlayingStatus: PlayingStatus.PLAY,
               musicUrl: widget.music.previewUrl);
           widget.updateTrackId(widget.music.trackId);
+          widget.changePlayMusicArrangement();
         }
       },
       child: Card(

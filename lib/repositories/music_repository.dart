@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:music_player_app/helpers/call_exception.dart';
 import 'package:music_player_app/models/music.dart';
 
 import 'package:http/http.dart' as http;
@@ -19,7 +20,7 @@ class MusicRepositoryImpl implements MusicRepository {
       final response = await client.post(Uri.https('itunes.apple.com', '/search'), body: {'term': '$query'});
       return Musics.fromJson(jsonDecode(response.body));
     } catch (e) {
-      throw Exception('Search music error');
+      throw CallException(message: 'Search music error');
     }
   }
 }

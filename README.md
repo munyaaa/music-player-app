@@ -18,6 +18,7 @@ Connect your device or emulator and run the application
 1. Pause the song
 1. Resume the song
 1. Seek the song
+1. Fastforward and backward the song
 
 ### Supported Devices
 - Android API Level 16 and above (Android 4.1 and above)

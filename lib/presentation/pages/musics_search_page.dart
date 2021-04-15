@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_player_app/blocs/musics_bloc/musics_bloc.dart';
 import 'package:music_player_app/helpers/media_control.dart';
+import 'package:music_player_app/models/music.dart';
 import 'package:music_player_app/presentation/widgets/music_card.dart';
 import 'package:music_player_app/presentation/widgets/music_control_card.dart';
 import 'package:music_player_app/service_locator.dart';
@@ -77,29 +78,17 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
                 return Column(
                   children: [
                     buildSearchField(context.read<MusicsBloc>()),
-                    Expanded(
-                      child: BlocBuilder<MusicsBloc, MusicsState>(
-                        builder: (BuildContext context, MusicsState state) {
-                          if (state is Loaded) {
-                            return ListView.builder(
-                              itemCount: state.musics.resultCount,
-                              itemBuilder: (BuildContext context, int index) {
-                                return MusicCard(
-                                  music: state.musics.results[index],
-                                  controlMedia: _controlMedia,
-                                  updateTrackId: _updateTrackId,
-                                  playingTrackId: _playingTrackId,
-                                );
-                              },
-                            );
-                          } else if (state is Error) {
-                            return Text(state.errorMessage);
-                          }
-                          return Container();
-                        },
-                      ),
-                    ),
+                    buildMusicListView(state.musics)
                   ],
+                );
+              } else if (state is Error) {
+                return Expanded(
+                  child: Column(
+                    children: [
+                      buildSearchField(context.read<MusicsBloc>()),
+                      Text(state.errorMessage)
+                    ],
+                  ),
                 );
               } else {
                 return buildSearchField(context.read<MusicsBloc>());
@@ -107,6 +96,22 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildMusicListView(Musics musics) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: musics.resultCount,
+        itemBuilder: (BuildContext context, int index) {
+          return MusicCard(
+            music: musics.results[index],
+            controlMedia: _controlMedia,
+            updateTrackId: _updateTrackId,
+            playingTrackId: _playingTrackId,
+          );
+        },
       ),
     );
   }

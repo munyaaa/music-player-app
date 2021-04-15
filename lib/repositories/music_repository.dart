@@ -17,10 +17,11 @@ class MusicRepositoryImpl implements MusicRepository {
   @override
   Future<Musics> searchMusic(String query) async {
     try {
-      final response = await client.post(Uri.https('itunes.apple.com', '/search'), body: {'term': '$query'});
+      final response = await client.post(Uri.https('itunes.apple.com', '/search'), body: {'term': '$query', 'limit': '25'});
       return Musics.fromJson(jsonDecode(response.body));
     } catch (e) {
-      throw CallException(message: 'Search music error');
+      print(e);
+      throw CallException(message: 'Something is going wrong');
     }
   }
 }

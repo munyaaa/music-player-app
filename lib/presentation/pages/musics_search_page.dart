@@ -100,13 +100,12 @@ class _MusicsSearchPageState extends State<MusicsSearchPage> {
                     ],
                   );
                 } else if (state is Error) {
-                  return Expanded(
-                    child: Column(
-                      children: [
-                        buildSearchField(context.read<MusicsBloc>()),
-                        Text(state.errorMessage)
-                      ],
-                    ),
+                  print(state);
+                  return Column(
+                    children: [
+                      buildSearchField(context.read<MusicsBloc>()),
+                      Text(state.errorMessage)
+                    ],
                   );
                 } else {
                   return buildSearchField(context.read<MusicsBloc>());
